@@ -34,16 +34,7 @@ class TeamController extends Controller
 
     public function create(Request $request){
 
-        $hackathon = DB::table('hackathones')->where('title', $request['hackathon'])->first();
-// return $hackathon->id;
-        // $team = Team::create([
-        //     'name' => $request['name'],
-        //     'score' => 0,
-        //     'comment' => "no comment yet",
-        //     'hackathone_id' => $hackathon->id,
-        //     'user_id' => Auth::user()->id,
-        //     'status' => "Pending"
-        // ]);
+        $hackathon = Hackathone::where('title', $request['hackathon'])->first();
 
         $user = User::find(Auth::user()->id);
         $team = new Team();
@@ -51,7 +42,8 @@ class TeamController extends Controller
         $team->score = 0;
         $team->comment = "no comment yet";
         $team->hackathone()->associate($hackathon);
-        $team->status = "Pending";
+        $team->status = "Pending";  
+        // return $team;
         $team->save();
         
 
